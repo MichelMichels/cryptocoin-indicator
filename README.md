@@ -4,6 +4,7 @@ I was searching for an indicator on the price of several cryptocoins so I didn't
 
 ## The application
 !['screenshot of the app indicator'](http://i.imgur.com/smxXboK.png)
+
 The application itself is a rather simple program written in python 3.5.3. At this time, the app uses 2 APIs. One from LiteBit.eu and one from coinmarketcap.com. However, if there's interest in this application, I will add more. You have to option to manually update the price with the "Update price" menu item, but the price also refreshes every 5 minutes.
 
 You can also run multiple instances next to eachother.
