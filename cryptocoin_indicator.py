@@ -34,6 +34,9 @@ class Cryptocoin(object):
         self.icon = icon
         self.round_number = round_number
 
+    def deep_copy(self):
+        return Cryptocoin(self.name, self.api_name, self.icon, self.round_number)
+
 class Exchange(object):
     def __init__(self, name, api_base_url, api_end = ''):
         self.name = name
@@ -56,7 +59,7 @@ class Exchange(object):
 
 class LiteBitExchange(Exchange):
     def get_price(self, cryptocoin, currency):
-        copycoin = cryptocoin
+        copycoin = cryptocoin.deep_copy()
 
         if cryptocoin.api_name == 'nav-coin':
             copycoin.api_name = 'nav'
