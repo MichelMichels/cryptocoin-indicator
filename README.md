@@ -1,4 +1,4 @@
-# Cryptocoin appindicator
+# Cryptocoin price statusbar widget
 ## Introduction
 I was searching for an indicator on the price of several cryptocoins so I didn't need to refresh the pages of exchanges everytime I wanted to know what the value of a certain coin was. I was astounded as I found nobody had created such application, so I wrote one myself.
 
