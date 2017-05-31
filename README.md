@@ -30,6 +30,14 @@ If you want to see the debug messages, run following command:
 ```bash
 python3 cryptocoin_indicator.py
 ```
+## Changelog
+# 1.0.1 - 31/05/2017
++ Bug fix: shallow copy instead of deep copy with Cryptocoin class
+
+# 1.0.0 - 31/05/2017
++ Initial release
++ Support for BTC, ETH, DOGE, NAV, LTC
++ Support for Coinmarketcap.com, LiteBit.eu
 
 ## Donations
 If one would feel so inclined to donate to me, I listed various cryptocoin addresses of mine here. This is completely optional and in no way should you feel pressured to donate.
