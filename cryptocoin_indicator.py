@@ -3,7 +3,7 @@
 #description     : Indicator for the Unity (and gnome) shell for several cryptocoins
 #author          : Michel Michels
 #date            : 20170531
-#version         : 0.2
+#version         : 1.0.2
 #usage           : nohup python3 cryptocoin_appindicator.py &
 #notes           : Can also be run with debug output with 'python3 cryptocoin_appindicator.py'. This project uses the litebit.eu and coinmarketcap.com API.
 #python_version  : 3.5.3

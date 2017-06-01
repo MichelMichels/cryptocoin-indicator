@@ -50,6 +50,7 @@ python3 /path/to/cryptocoin_indicator.py
 ## Changelog
 ### 1.0.2 - 01/06/2017
 + Bug fix: path of icon fixed
++ Fix: Linux Mint Cinnamon update
 
 ### 1.0.1 - 31/05/2017
 + Bug fix: shallow copy instead of deep copy with Cryptocoin class
