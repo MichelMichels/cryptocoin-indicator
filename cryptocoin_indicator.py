@@ -28,10 +28,12 @@ def GetDebugText():
     return '[DEBUG][' + str(datetime.now()) + '] '
 
 class Cryptocoin(object):
+    path_of_script = os.path.dirname(os.path.realpath(__file__)) + '/'
+
     def __init__(self, name, api_name, icon, round_number):
         self.name = name
         self.api_name = api_name
-        self.icon = icon
+        self.icon = self.path_of_script + icon
         self.round_number = round_number
 
     def deep_copy(self):
@@ -96,12 +98,11 @@ class ExchangeApp(object):
     exchange_list.append(coinmarketcap)
     exchange_list.append(litebit)
 
-    print(os.path.abspath('icons/doge.png'))
-    dogecoin = Cryptocoin('Dogecoin', 'dogecoin', os.path.abspath('icons/doge.png'), 5)
-    bitcoin = Cryptocoin('Bitcoin', 'bitcoin', os.path.abspath('icons/bitcoin.png'), 2)
-    navcoin = Cryptocoin('Navcoin', 'nav-coin', os.path.abspath('icons/navcoin.png'), 4)
-    litecoin = Cryptocoin('Litecoin', 'litecoin', os.path.abspath('icons/litecoin.png'), 2)
-    ethereum = Cryptocoin('Ethereum', 'ethereum', os.path.abspath('icons/ethereum.png'), 2)
+    dogecoin = Cryptocoin('Dogecoin', 'dogecoin', 'icons/doge.png', 5)
+    bitcoin = Cryptocoin('Bitcoin', 'bitcoin', 'icons/bitcoin.png', 2)
+    navcoin = Cryptocoin('Navcoin', 'nav-coin', 'icons/navcoin.png', 4)
+    litecoin = Cryptocoin('Litecoin', 'litecoin', 'icons/litecoin.png', 2)
+    ethereum = Cryptocoin('Ethereum', 'ethereum', 'icons/ethereum.png', 2)
 
     cc_list = []
     cc_list.append(bitcoin)
