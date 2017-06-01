@@ -19,18 +19,38 @@ Following coins are currently supported:
 More will follow.
 
 ## Dependencies
-This python script uses the 'requests' library.
+### Python libraries
+The python application uses the 'requests' library. This library can be easily installed using pip.
+
+## Supported Linux distros
+### Ubuntu 17.04 (Unity)
+The appindicator runs out of the box on Ubuntu 17.04 with a Unity shell. Multiple instances can be run next to eachother without any problem.
+
+### Linux Mint 18.1 (Cinnamon)
+When run on Linux Mint with the Cinnamon window manager only an icon will appear without the price label. To fix this issue, you need to install following applet: https://github.com/lestcape/Systray-Indicator. Extract the zip and place the 'systray-indicator@cinnamon.org' folder in the '~/.local/share/cinnamon/applets/' directory. Launch the builtin 'Applets' program (see screenshot).
+!['Screenshot of the Applet app on Cinnamon'](http://i.imgur.com/WAzmQRo.png)
+
+Select 'Systray-Indicator' and press the 'Add to panel'-button. Then rightclick the 'Systray-Indicator' and click 'Configure'. Here, set 'Enable support for indicators' to 'ON'.
+!['Screenshot of the settings of Systray-Indicator'](http://i.imgur.com/Fujan5c.png)
+
+Now you can run the python appindicator as indicated in the 'Running the app' section.
+
+Known issues: 
++ Only one instance can be run at a time in the Cinnamon shell. I will try to fix this in the future
 
 ## Running the app
 You can run this application without debug messages with following command in a terminal:
 ```bash
-nohup python3 cryptocoin_indicator.py &
+nohup python3 /path/to/cryptocoin_indicator.py &
 ```
 If you want to see the debug messages, run following command:
 ```bash
-python3 cryptocoin_indicator.py
+python3 /path/to/cryptocoin_indicator.py
 ```
 ## Changelog
+### 1.0.2 - 01/06/2017
++ Bug fix: path of icon fixed
+
 ### 1.0.1 - 31/05/2017
 + Bug fix: shallow copy instead of deep copy with Cryptocoin class
 
