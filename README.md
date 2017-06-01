@@ -37,6 +37,7 @@ Now you can run the python appindicator as indicated in the 'Running the app' se
 
 Known issues: 
 + Only one instance can be run at a time in the Cinnamon shell. I will try to fix this in the future
++ At reboot, cinnamon must be restarted to display the price indicator
 
 ## Running the app
 You can run this application without debug messages with following command in a terminal:
@@ -51,6 +52,9 @@ python3 /path/to/cryptocoin_indicator.py
 ### 1.0.2 - 01/06/2017
 + Bug fix: path of icon fixed
 + Fix: Linux Mint Cinnamon update
++ Support for Ripple, NEM, Ethereum Classic, Dash, Monero, Stratis, Bytecoin
++ About dialog added
++ MIT license
 
 ### 1.0.1 - 31/05/2017
 + Bug fix: shallow copy instead of deep copy with Cryptocoin class

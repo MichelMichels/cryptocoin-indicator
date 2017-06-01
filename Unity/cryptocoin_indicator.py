@@ -60,35 +60,74 @@ class Exchange(object):
         return result.json()
 
 class LiteBitExchange(Exchange):
+    supported_cc = [
+        'Dogecoin', 
+        'Bitcoin', 
+        'Navcoin', 
+        'Litecoin', 
+        'Ethereum', 
+        'Ripple', 
+        'NEM', 
+        'Ethereum Classic', 
+        'Dash', 
+        'Monero', 
+        'Stratis'
+    ]
+
     def get_price(self, cryptocoin, currency):
-        copycoin = cryptocoin.deep_copy()
+        if cryptocoin.name in self.supported_cc:
+            copycoin = cryptocoin.deep_copy()
 
-        if cryptocoin.api_name == 'nav-coin':
-            copycoin.api_name = 'nav'
+            # Icon api name fixes
+            if cryptocoin.api_name == 'nav-coin':
+                copycoin.api_name = 'nav'
+            elif cryptocoin.api_name == 'ethereum-classic':
+                copycoin.api_name = 'etc'
 
-        # GET response and create JSON object
-        json_obj = super().get_json_object(copycoin)
 
-        price = json_obj['sell']
-        price = price.replace(',', '')
+            # GET response and create JSON object
+            json_obj = super().get_json_object(copycoin)
 
-        if currency == 'USD':
-            json_eur = requests.get('http://api.fixer.io/latest').json()
-            return round(Decimal(float(price) * json_eur["rates"]["USD"]), cryptocoin.round_number)
+            price = json_obj['sell']
+            price = price.replace(',', '')
 
-        # Return eur price
-        elif currency == 'EUR':
-            return round(Decimal(price), cryptocoin.round_number)
+            if currency == 'USD':
+                json_eur = requests.get('http://api.fixer.io/latest').json()
+                return round(Decimal(float(price) * json_eur["rates"]["USD"]), cryptocoin.round_number)
+
+            # Return eur price
+            elif currency == 'EUR':
+                return round(Decimal(price), cryptocoin.round_number)
+        else:
+            return 'CC not supported'
 
 class CoinmarketcapExchange(Exchange):
-    def get_price(self, cryptocoin, currency):
-        # GET json object
-        json_obj = super().get_json_object(cryptocoin)
+    supported_cc = [
+        'Dogecoin', 
+        'Bitcoin', 
+        'Navcoin', 
+        'Litecoin', 
+        'Ethereum', 
+        'Ripple', 
+        'NEM', 
+        'Ethereum Classic', 
+        'Dash', 
+        'Monero', 
+        'Stratis',
+        'Bytecoin'
+    ]
 
-        if currency == 'USD':
-            return round(Decimal(json_obj[0]['price_usd']), cryptocoin.round_number)
-        elif currency == 'EUR':
-            return round(Decimal(json_obj[0]['price_eur']), cryptocoin.round_number)
+    def get_price(self, cryptocoin, currency):
+        if cryptocoin.name in self.supported_cc:
+            # GET json object
+            json_obj = super().get_json_object(cryptocoin)
+
+            if currency == 'USD':
+                return round(Decimal(json_obj[0]['price_usd']), cryptocoin.round_number)
+            elif currency == 'EUR':
+                return round(Decimal(json_obj[0]['price_eur']), cryptocoin.round_number)
+        else:
+            return 'CC not supported'
 
 class ExchangeApp(object):
     coinmarketcap = CoinmarketcapExchange("Coinmarketcap.com", "https://api.coinmarketcap.com/v1/ticker/", '/?convert=EUR')
@@ -103,13 +142,27 @@ class ExchangeApp(object):
     navcoin = Cryptocoin('Navcoin', 'nav-coin', 'icons/navcoin.png', 4)
     litecoin = Cryptocoin('Litecoin', 'litecoin', 'icons/litecoin.png', 2)
     ethereum = Cryptocoin('Ethereum', 'ethereum', 'icons/ethereum.png', 2)
+    ripple = Cryptocoin('Ripple', 'ripple', 'icons/ripple.png', 4)
+    nem = Cryptocoin('NEM', 'nem', 'icons/nem.png', 4)
+    ethereum_classic = Cryptocoin('Ethereum Classic', 'ethereum-classic', 'icons/etc.png', 2)
+    dash = Cryptocoin('Dash', 'dash', 'icons/dash.png', 2)
+    monero = Cryptocoin('Monero', 'monero', 'icons/monero.png', 2)
+    stratis = Cryptocoin('Stratis', 'stratis', 'icons/stratis.png', 3)
+    bytecoin = Cryptocoin('Bytecoin', 'bytecoin-bcn', 'icons/bytecoin.png', 5)
 
     cc_list = []
     cc_list.append(bitcoin)
+    cc_list.append(bytecoin)
+    cc_list.append(dash)
     cc_list.append(dogecoin)
     cc_list.append(ethereum)
+    cc_list.append(ethereum_classic)
     cc_list.append(litecoin)
+    cc_list.append(monero)
     cc_list.append(navcoin)
+    cc_list.append(nem)
+    cc_list.append(ripple)
+    cc_list.append(stratis)
 
     def __init__(self):
         self.current_exchange = self.coinmarketcap
@@ -254,11 +307,15 @@ class Gui(object):
         item_radio_eur.connect("activate", self.exchange_app.set_currency, 'EUR')
         item_radio_usd.connect("activate", self.exchange_app.set_currency, 'USD')
 
+        ######## ABOUT ##############
+        item_about = gtk.MenuItem('About')
+
         ######## QUIT ########
         item_quit = gtk.MenuItem('Quit')
 
         # Connect to quit() method
         item_update_price.connect('activate', self.exchange_app.update_price)
+        item_about.connect('activate', self.about_window)
         item_quit.connect('activate', quit)
 
 
@@ -279,6 +336,7 @@ class Gui(object):
         menu.append(item_radio_usd)
 
         menu.append(gtk.SeparatorMenuItem())
+        menu.append(item_about)
         menu.append(item_quit)
 
         # Show menu
@@ -286,6 +344,20 @@ class Gui(object):
 
         # Return the created menu object
         return menu
+
+    def about_window(self, source):
+        dialog = gtk.AboutDialog()
+
+        dialog.set_program_name('Cryptocoin Price Indicator')
+        dialog.set_version('1.0.2')
+        dialog.set_copyright('Copyright 2017 Michel Michels')
+        dialog.set_license('MIT License\nCopyright (c) 2017 Michel Michels\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.')
+        dialog.set_wrap_license(True)
+        dialog.set_comments('This application is written in Python 3.5.3 and currently tested on systems using the Unity shell.')
+        dialog.set_website('https://github.com/MichelMichels/cryptocoin-indicator')
+        
+        dialog.run()
+        dialog.destroy()
 
     def quit(self, source):
         gtk.main_quit()
