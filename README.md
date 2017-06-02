@@ -48,6 +48,12 @@ If you want to see the debug messages, run following command:
 ```bash
 python3 /path/to/cryptocoin_indicator.py
 ```
+
+## To Do
++ Support launch arguments (exchange, cryptocoin, refreshrate, ...)
++ Support launch variables in text file (exchange, cryptocoin, refreshrate, ...)
++ Add more coins
+
 ## Changelog
 ### 1.0.2 - 01/06/2017
 + Bug fix: path of icon fixed
