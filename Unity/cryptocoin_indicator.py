@@ -71,7 +71,8 @@ class LiteBitExchange(Exchange):
         'Ethereum Classic', 
         'Dash', 
         'Monero', 
-        'Stratis'
+        'Stratis',
+        'ArtByte'
     ]
 
     def get_price(self, cryptocoin, currency):
@@ -114,13 +115,20 @@ class CoinmarketcapExchange(Exchange):
         'Dash', 
         'Monero', 
         'Stratis',
-        'Bytecoin'
+        'Bytecoin',
+        'ArtByte'
     ]
 
     def get_price(self, cryptocoin, currency):
         if cryptocoin.name in self.supported_cc:
+            copycoin = cryptocoin.deep_copy()
+
+            # Icon api name fixes
+            if cryptocoin.api_name == 'artbyte':
+                copycoin.api_name = 'applebyte'
+
             # GET json object
-            json_obj = super().get_json_object(cryptocoin)
+            json_obj = super().get_json_object(copycoin)
 
             if currency == 'USD':
                 return round(Decimal(json_obj[0]['price_usd']), cryptocoin.round_number)
@@ -149,8 +157,10 @@ class ExchangeApp(object):
     monero = Cryptocoin('Monero', 'monero', 'icons/monero.png', 2)
     stratis = Cryptocoin('Stratis', 'stratis', 'icons/stratis.png', 3)
     bytecoin = Cryptocoin('Bytecoin', 'bytecoin-bcn', 'icons/bytecoin.png', 5)
+    artbyte = Cryptocoin('ArtByte', 'artbyte', 'icons/artbyte.png', 6)
 
     cc_list = []
+    cc_list.append(artbyte)
     cc_list.append(bitcoin)
     cc_list.append(bytecoin)
     cc_list.append(dash)
