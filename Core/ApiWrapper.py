@@ -9,7 +9,7 @@ class ApiWrapper(ABC):
         self.logger = logger    
         super().__init__() 
 
-    def get_response(self, endpoint, headers = {}, params = {}):
+    def get_response(self, endpoint, params = {}, headers = {}):
         response = None
         while response is None:
             try:
@@ -24,4 +24,3 @@ class ApiWrapper(ABC):
                 response = 'NaN'
 
         return response.json()
-

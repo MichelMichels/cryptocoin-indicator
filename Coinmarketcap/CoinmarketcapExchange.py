@@ -6,7 +6,7 @@ class CoinmarketcapExchange(Exchange):
         super().__init__('Coinmarketcap', CoinmarketcapApi(logger), logger)
 
     def get_price(self, cryptocoin):
-        response = self.api.get_latest_cryptocurrency_quotes(symbol = cryptocoin) 
+        response = self.api.get_latest_market_quotes(symbol = cryptocoin) 
         try:
             coin_data = next(iter(response['data'].items()))
             quote_data = coin_data[1]['quote']
@@ -14,5 +14,8 @@ class CoinmarketcapExchange(Exchange):
         except KeyError as keyError:
             self.logger.log('Key not found in response, ' + str(keyError))
             price = 'NaN'
-
         return str(price)
+
+    def get_supported_coins(self):
+        
+        pass

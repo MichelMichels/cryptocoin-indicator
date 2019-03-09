@@ -18,5 +18,5 @@ class LiteBitExchange(Exchange):
 
     def get_supported_coins(self):
         response = self.api.get_markets()
-        return dict([(key, val['name']) for key, val in response['result'].items()])
+        return dict([(coin_data['name'], coin_api_code) for coin_api_code, coin_data in response['result'].items()])
 

@@ -11,9 +11,9 @@
 
 import os, sys, signal
 import requests
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk as gtk
+#import gi
+#gi.require_version('Gtk', '3.0')
+#from gi.repository import Gtk as gtk
 from Core.Logger import Logger
 from LiteBit.LiteBitExchange import LiteBitExchange
 from Coinmarketcap.CoinmarketcapExchange import CoinmarketcapExchange
@@ -22,10 +22,9 @@ from Coinmarketcap.CoinmarketcapExchange import CoinmarketcapExchange
 def main():
     logger = Logger()
     litebit = LiteBitExchange(logger)   
-    coinmarketcap = CoinmarketcapExchange(logger) 
-
-    logger.log('Bitcoin selling price on LiteBit.eu is ' + litebit.get_price('btc') + ' euro.')
-    logger.log('Bitcoin selling price on CoinmarketCap.com is ' + coinmarketcap.get_price('BTC') + ' euro.')
+    coins = litebit.get_supported_coins()
+    btc_price = litebit.get_price('btc')
+    logger.log('Bitcoin price: ' + btc_price + ' euro')
 
 if __name__ == "__main__":
     main()
