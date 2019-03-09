@@ -1,9 +1,10 @@
-from LiteBit.LiteBitApi import LiteBitApi
+from Exchanges.LiteBit.LiteBitApi import LiteBitApi
 from Core.Exchange import Exchange
 
 class LiteBitExchange(Exchange):
     def __init__(self, logger):
-        super().__init__('LiteBit', LiteBitApi(logger), logger)
+        self.api = LiteBitApi(logger)
+        super().__init__('LiteBit', logger)
 
     def get_price(self, cryptocoin, sell_or_buy = 'sell'):
         response = self.api.get_market(cryptocoin)

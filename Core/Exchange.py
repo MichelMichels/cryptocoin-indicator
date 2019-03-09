@@ -2,9 +2,8 @@
 import sys
 
 class Exchange(object):
-    def __init__(self, name, api, logger):
+    def __init__(self, name, logger):
         self.name = name
-        self.api = api
         self.logger = logger
 
     def __str__(self):

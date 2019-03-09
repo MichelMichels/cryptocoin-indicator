@@ -9,22 +9,15 @@
 #python_version  : 3.6.7
 #==============================================================================
 
-import os, sys, signal
-import requests
-#import gi
-#gi.require_version('Gtk', '3.0')
-#from gi.repository import Gtk as gtk
 from Core.Logger import Logger
-from LiteBit.LiteBitExchange import LiteBitExchange
-from Coinmarketcap.CoinmarketcapExchange import CoinmarketcapExchange
-
-
+from Exchanges.Coinmarketcap.CoinmarketcapExchange import CoinmarketcapExchange
+from Exchanges.LiteBit.LiteBitExchange import LiteBitExchange
+from GUI.gui import GUI
+       
 def main():
     logger = Logger()
-    litebit = LiteBitExchange(logger)   
-    coins = litebit.get_supported_coins()
-    btc_price = litebit.get_price('btc')
-    logger.log('Bitcoin price: ' + btc_price + ' euro')
+    gui = GUI()
+    gui.start()
 
 if __name__ == "__main__":
     main()

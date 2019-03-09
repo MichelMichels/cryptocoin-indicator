@@ -1,9 +1,10 @@
-from Coinmarketcap.CoinmarketcapApi import CoinmarketcapApi
+from Exchanges.Coinmarketcap.CoinmarketcapApi import CoinmarketcapApi
 from Core.Exchange import Exchange
 
 class CoinmarketcapExchange(Exchange):
     def __init__(self, logger):
-        super().__init__('Coinmarketcap', CoinmarketcapApi(logger), logger)
+        self.api = CoinmarketcapApi(logger)
+        super().__init__('Coinmarketcap', logger)
 
     def get_price(self, cryptocoin):
         response = self.api.get_latest_market_quotes(symbol = cryptocoin) 
