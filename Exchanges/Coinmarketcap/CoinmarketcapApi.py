@@ -1,5 +1,5 @@
 import os
-from Core.ApiWrapper import ApiWrapper
+from core import ApiWrapper
 
 class CoinmarketcapApi(ApiWrapper):
     def __init__(self, logger):

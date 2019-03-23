@@ -1,5 +1,5 @@
 from Exchanges.LiteBit.LiteBitApi import LiteBitApi
-from Core.Exchange import Exchange
+from core import Exchange
 
 class LiteBitExchange(Exchange):
     def __init__(self, logger):

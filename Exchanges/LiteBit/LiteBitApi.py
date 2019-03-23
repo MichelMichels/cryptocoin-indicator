@@ -1,4 +1,4 @@
-from Core.ApiWrapper import ApiWrapper
+from core import ApiWrapper
 
 class LiteBitApi(ApiWrapper):
     def __init__(self, logger):

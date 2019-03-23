@@ -1,5 +1,5 @@
 from Exchanges.Coinmarketcap.CoinmarketcapApi import CoinmarketcapApi
-from Core.Exchange import Exchange
+from core import Exchange
 
 class CoinmarketcapExchange(Exchange):
     def __init__(self, logger):
