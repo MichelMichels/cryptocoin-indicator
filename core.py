@@ -29,12 +29,13 @@ class ApiWrapper(ABC):
         return response.json()
 
 class Cryptocoin(object):
-    path_of_script = os.path.dirname(os.path.realpath(__file__)) + '/'
+    path = os.path.dirname(os.path.realpath(__file__)) + '/'
 
-    def __init__(self, name, api_name, icon, round_number):
+    def __init__(self, name, api_name, abbr = '', icon = '', round_number = 0):
         self.name = name
+        self.abbr = abbr
         self.api_name = api_name
-        self.icon = self.path_of_script + icon
+        self.icon = self.path + icon
         self.round_number = round_number
 
     def deep_copy(self):
@@ -48,7 +49,7 @@ class Exchange(object):
     def __str__(self):
         return self.name
     
-    def get_price(self, cryptocoin, sell_or_buy = 'sell'):
+    def get_price(self, cryptocoin, currency = 'USD', sell_or_buy = 'sell'):
         raise NotImplementedError
 
     def get_supported_coins(self):

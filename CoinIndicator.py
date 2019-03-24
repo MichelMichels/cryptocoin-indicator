@@ -9,6 +9,7 @@
 #python_version  : 3.6.7
 
 from core import Logger
+from exchangeapp import ExchangeApp
 from Exchanges.Coinmarketcap.CoinmarketcapExchange import CoinmarketcapExchange
 from Exchanges.LiteBit.LiteBitExchange import LiteBitExchange
 from GUI.Indicator import Indicator
@@ -16,7 +17,9 @@ from GUI.Indicator import Indicator
 def main():    
     logger = Logger()    
     logger.log('Bootstrapping CoinIndicator...')
-    Indicator(logger).start()
+
+    app = ExchangeApp(logger)
+    Indicator(app, logger).start()
 
 if __name__ == "__main__":
     main()

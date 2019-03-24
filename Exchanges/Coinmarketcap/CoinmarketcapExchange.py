@@ -3,10 +3,10 @@ from core import Exchange
 
 class CoinmarketcapExchange(Exchange):
     def __init__(self, logger):
-        self.api = CoinmarketcapApi(logger)
         super().__init__('Coinmarketcap', logger)
+        self.api = CoinmarketcapApi(logger)
 
-    def get_price(self, cryptocoin):
+    def get_price(self, cryptocoin, currency):
         response = self.api.get_latest_market_quotes(symbol = cryptocoin) 
         try:
             coin_data = next(iter(response['data'].items()))
@@ -17,6 +17,5 @@ class CoinmarketcapExchange(Exchange):
             price = 'NaN'
         return str(price)
 
-    def get_supported_coins(self):
-        
-        pass
+    def get_supported_coins(self):        
+        return []

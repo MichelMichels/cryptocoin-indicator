@@ -1,13 +1,13 @@
 from Exchanges.LiteBit.LiteBitApi import LiteBitApi
-from core import Exchange
+from core import Exchange, Cryptocoin
 
 class LiteBitExchange(Exchange):
     def __init__(self, logger):
+        super().__init__('LiteBit', logger)        
         self.api = LiteBitApi(logger)
-        super().__init__('LiteBit', logger)
 
-    def get_price(self, cryptocoin, sell_or_buy = 'sell'):
-        response = self.api.get_market(cryptocoin)
+    def get_price(self, cryptocoin, currency = 'EUR', sell_or_buy = 'sell'):
+        response = self.api.get_market(cryptocoin.api_name)
 
         try:
             return response['result'][sell_or_buy]
@@ -19,5 +19,5 @@ class LiteBitExchange(Exchange):
 
     def get_supported_coins(self):
         response = self.api.get_markets()
-        return dict([(coin_data['name'], coin_api_code) for coin_api_code, coin_data in response['result'].items()])
+        return [Cryptocoin(coin_data['name'], coin_api_code, coin_api_code.upper()) for coin_api_code, coin_data in response['result'].items()]
 
