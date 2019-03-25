@@ -1,4 +1,4 @@
-#from Exchanges.Coinmarketcap.CoinmarketcapExchange import CoinmarketcapExchange
+from Exchanges.Coinmarketcap.CoinmarketcapExchange import CoinmarketcapExchange
 from Exchanges.LiteBit.LiteBitExchange import LiteBitExchange
 
 class ExchangeApp(object):   
@@ -10,8 +10,7 @@ class ExchangeApp(object):
 
     def __init__(self, logger):
         self.logger = logger
-        #self.exchanges = [ LiteBitExchange(logger), CoinmarketcapExchange(logger) ]
-        self.exchanges = [ LiteBitExchange(logger) ]
+        self.exchanges = [ LiteBitExchange(logger), CoinmarketcapExchange(logger) ]
         self.current_exchange = self.exchanges[0]
         self.current_coin = None
         self.current_currency = 'EUR'
@@ -60,5 +59,10 @@ class ExchangeApp(object):
             logger.log('Symbol not found of currency ' + self.current_currency)
 
     def update_price(self):
-        price = self.current_exchange.get_price(self.current_coin)
+        price = self.current_exchange.get_price(self.current_coin, self.current_currency)
+        if price > 100:
+            price = round(price, 2)
+        else:
+            price = round(price, 5)
+
         self.set_price(price)
